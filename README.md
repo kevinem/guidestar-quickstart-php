@@ -20,8 +20,13 @@ https://community.guidestar.org/docs/DOC-1867
 
 ### Example Usage
 
+Note: Using apiKey takes precedence over username and password.
+
 ```php
 $quickStartDetail = new QuickStartDetail(new \GuzzleHttp\Client(), ['apiKey' => 'your_api_key']);
+$quickStartDetail->getOrganizationDetail(7831216);
+
+$quickStartDetail = new QuickStartDetail(new \GuzzleHttp\Client(), ['username' => 'your_username', 'password' => 'your_password']);
 $quickStartDetail->getOrganizationDetail(7831216);
 
 $quickStartSearch = new QuickStartSearch(new \GuzzleHttp\Client(), ['apiKey' => 'your_api_key']);

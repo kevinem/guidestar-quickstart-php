@@ -20,15 +20,26 @@ class QuickStartClient
 
     protected $apiKey;
 
+    protected $username;
+
+    protected $password;
+
     /**
      * Client constructor.
-     * @param array $config
      * @param Client $client
+     * @param array $config
+     * @throws \Exception
      */
     public function __construct(Client $client, array $config)
     {
-        $this->apiKey = $config['apiKey'];
         $this->client = $client;
+        $this->apiKey = isset($config['apiKey']) ? $config['apiKey'] : null;
+        $this->username = isset($config['username']) ? $config['username'] : null;
+        $this->password = isset($config['password']) ? $config['password'] : null;
+
+        if (!isset($this->apiKey) && !(isset($this->username) && isset($this->password))) {
+            throw new \Exception('Either apiKey or username and password is needed');
+        }
     }
 
     /**
@@ -44,7 +55,7 @@ class QuickStartClient
      */
     protected function buildAuth()
     {
-        return ['auth' => [$this->apiKey, '']];
+        return isset($this->apiKey) ? ['auth' => [$this->apiKey, '']] : ['auth' => [$this->username, $this->password]];
     }
 
     /**
